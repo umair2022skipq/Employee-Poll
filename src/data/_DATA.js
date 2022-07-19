@@ -192,8 +192,6 @@ export function _saveQuestionAnswer({ authedUser, qid, answer }) {
     }
 
     setTimeout(() => {
-      console.log(authedUser, qid, answer);
-
       users = {
         ...users,
         [authedUser]: {

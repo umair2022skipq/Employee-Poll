@@ -80,4 +80,4 @@ const NewQuestions = ({ isLoading }) => {
   );
 };
 
-export default React.memo(NewQuestions);
+export default NewQuestions;

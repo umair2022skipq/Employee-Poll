@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { Spinner } from "./NewQuestions";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   employeePollSelector,
@@ -40,6 +40,8 @@ const QuestionDetails = ({ isLoading }) => {
 
   const questionId = useParams();
   const question = { ...poll.questions.byId[questionId.question_id] };
+
+  const navigate = useNavigate();
 
   const author = user.users.byId[question.author];
 
@@ -76,6 +78,12 @@ const QuestionDetails = ({ isLoading }) => {
   if (isLoading) {
     return <Spinner />;
   }
+
+  // const navigation = window.performance.getEntriesByType("navigation");
+
+  // if (navigation[0].type === "reload") {
+  //   navigate("/");
+  // }
 
   return (
     <>
