@@ -1,25 +1,25 @@
 import { List } from "@mui/material";
 import { ListItem, ListItemAvatar, ListItemText } from "@mui/material";
 import { Avatar } from "@mui/material/";
-import { useEffect, useState } from "react";
 import { _getUsers } from "../data/_DATA";
+import CircularProgress from "@mui/material/CircularProgress";
+import Typography from "@mui/material/Typography";
+import { useSelector } from "react-redux/es/exports";
+import { leaderSelector } from "../features/userSlice/userSlice";
 
-const LeaderBoard = () => {
-  const [users, setUsers] = useState("");
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const res = await _getUsers();
-      const data = Object.values(res);
-      setUsers([...data]);
-    };
-    fetchUsers();
-  }, []);
-  console.log(users);
+const LeaderBoard = ({ isLoading }) => {
+  const leaders = useSelector(leaderSelector);
+  if (isLoading) {
+    return <CircularProgress />;
+  }
+
   return (
     <>
-      <h1>Leaderboard</h1>
-      {users &&
-        users.map((user) => (
+      <Typography variant="h2" component="div" gutterBottom>
+        Leaderboard
+      </Typography>
+      {leaders &&
+        leaders.map((user) => (
           <List key={user.id}>
             <ListItem>
               <ListItemAvatar>
@@ -27,11 +27,16 @@ const LeaderBoard = () => {
               </ListItemAvatar>
               <ListItemText
                 primary={`${user.name}`}
-                secondary={`Current Score: ${
-                  user.questions.length + Object.keys(user.answers).length
-                } Asked: ${user.questions.length} Answered: ${
-                  Object.keys(user.answers).length
-                }`}
+                secondary={
+                  <>
+                    {`Current Score: ${
+                      user.questions.length + Object.keys(user.answers).length
+                    }`}{" "}
+                    <br />
+                    {`Asked: ${user.questions.length}`} <br />
+                    {`Answered: ${Object.keys(user.answers).length}`}
+                  </>
+                }
               />
             </ListItem>
           </List>
