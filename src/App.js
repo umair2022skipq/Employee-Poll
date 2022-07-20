@@ -23,12 +23,12 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!auth.isAuthenticated) {
-      return;
-    }
+    // if (!auth.isAuthenticated) {
+    //   return;
+    // }
     dispatch(getQuestionsAsync());
     dispatch(getUsersAsync());
-  }, [auth.isAuthenticated, dispatch]);
+  }, [dispatch]);
   if (!auth.isAuthenticated) {
     return <Login />;
   }
