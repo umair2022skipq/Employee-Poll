@@ -23,6 +23,7 @@ import {
   addAnswerAsync,
 } from "../features/employeePoll/employeePollSlice";
 import { userSelector } from "../features/userSlice/userSlice";
+import { authSelector } from "../features/auth/authSlice";
 
 function checkIfUserHasVotedAlready(question, userID) {
   if (question.optionOne.votes.includes(userID)) return "optionOne";
@@ -35,6 +36,7 @@ const QuestionDetails = ({ isLoading }) => {
 
   const user = useSelector(userSelector);
   const poll = useSelector(employeePollSelector);
+  const auth = useSelector(authSelector);
 
   const dispatch = useDispatch();
 
