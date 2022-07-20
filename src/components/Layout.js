@@ -27,7 +27,7 @@ import AddQuestion from "../pages/AddQuestion";
 import QuestionDetails from "../pages/QuestionDetails";
 import Copyright from "./Copyright";
 
-import { authSelector, logout } from "../features/auth/authSlice";
+import { authSelector, logout } from "../features/authSlice/authSlice";
 import { userSelector } from "../features/userSlice/userSlice";
 
 const Layout = ({ isLoading }) => {

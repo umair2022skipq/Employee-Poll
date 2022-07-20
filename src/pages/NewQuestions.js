@@ -27,7 +27,6 @@ const NewQuestions = ({ isLoading }) => {
   const { pathname } = useLocation();
 
   const authUser = auth.userId ? user.users.byId[auth.userId] : null;
-  console.log(poll.questions);
 
   const answeredQuestionIds = Object.keys(authUser.answers);
   const newQuestionIds = poll.questions.allIds.filter((id) => {
