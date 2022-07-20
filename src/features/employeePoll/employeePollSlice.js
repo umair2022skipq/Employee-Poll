@@ -72,29 +72,31 @@ export const employeePollSlice = createSlice({
       .addCase(getQuestionsAsync.rejected, (state) => {
         state.status = "failed";
       })
-      .addCase(addAnswerAsync.fulfilled, (state, action) => ({
-        ...state,
-        questions: {
-          ...state.questions,
-          byId: {
-            ...state.questions.byId,
-            [action.meta.arg.questionId]: {
-              ...state.questions.byId[action.meta.arg.questionId],
-              [action.meta.arg.answer]: {
-                ...state.questions.byId[action.meta.arg.questionId][
-                  action.meta.arg.answer
-                ],
-                votes: [
+      .addCase(addAnswerAsync.fulfilled, (state, action) => {
+        return {
+          ...state,
+          questions: {
+            ...state.questions,
+            byId: {
+              ...state.questions.byId,
+              [action.meta.arg.questionId]: {
+                ...state.questions.byId[action.meta.arg.questionId],
+                [action.meta.arg.answer]: {
                   ...state.questions.byId[action.meta.arg.questionId][
                     action.meta.arg.answer
-                  ].votes,
-                  action.meta.arg.userId,
-                ],
+                  ],
+                  votes: [
+                    ...state.questions.byId[action.meta.arg.questionId][
+                      action.meta.arg.answer
+                    ].votes,
+                    action.meta.arg.userId,
+                  ],
+                },
               },
             },
           },
-        },
-      }))
+        };
+      })
       .addCase(addQuestionAsync.pending, (state) => {
         state.status = "loading";
       })

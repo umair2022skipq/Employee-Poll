@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Layout from "./components/Layout";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import store from "./app/store";
 import { Provider, useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -38,7 +38,6 @@ const App = () => {
       <Router>
         <Provider store={store}>
           <Layout isLoading={loading} />
-          {/* <Route path="/login" element={<Login />} /> */}
         </Provider>
       </Router>
     </>
