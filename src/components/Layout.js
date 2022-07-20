@@ -9,10 +9,16 @@ import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import LogoutIcon from "@mui/icons-material/Logout";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+
 import { AppBar, Drawer } from "../style/styles";
 
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 import { MainListItems } from "./ListItems";
 import NewQuestions from "../pages/NewQuestions";
@@ -21,8 +27,18 @@ import AddQuestion from "../pages/AddQuestion";
 import QuestionDetails from "../pages/QuestionDetails";
 import Copyright from "./Copyright";
 
+import { authSelector, logout } from "../features/auth/authSlice";
+import { userSelector } from "../features/userSlice/userSlice";
+
 const Layout = ({ isLoading }) => {
   const mdTheme = createTheme();
+
+  const auth = useSelector(authSelector);
+  const user = useSelector(userSelector);
+
+  const dispatch = useDispatch();
+
+  const authUser = auth.userId ? user.users.byId[auth.userId] : null;
 
   const [open, setOpen] = useState(true);
   const toggleDrawer = () => {
@@ -60,11 +76,7 @@ const Layout = ({ isLoading }) => {
             >
               Employes Poll
             </Typography>
-            <IconButton color="inherit">
-              {/* <Button variant="contained" color="error">
-                LogOut
-              </Button> */}
-            </IconButton>
+            <IconButton color="inherit"></IconButton>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -83,7 +95,21 @@ const Layout = ({ isLoading }) => {
           <Divider />
           <List component="nav">
             <MainListItems />
-            <Divider sx={{ my: 1 }} />
+          </List>
+          <Divider sx={{ my: 1 }} />
+          <List>
+            <ListItem button onClick={() => dispatch(logout())}>
+              <ListItemIcon>
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <Typography variant="body1" display="block" gutterBottom>
+                    Logout <b>{authUser.name}</b>
+                  </Typography>
+                }
+              />
+            </ListItem>
           </List>
         </Drawer>
         <Box

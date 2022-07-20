@@ -1,16 +1,16 @@
 import { List } from "@mui/material";
 import { ListItem, ListItemAvatar, ListItemText } from "@mui/material";
 import { Avatar } from "@mui/material/";
-import { _getUsers } from "../data/_DATA";
-import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux/es/exports";
 import { leaderSelector } from "../features/userSlice/userSlice";
+import { Spinner } from "./NewQuestions";
 
 const LeaderBoard = ({ isLoading }) => {
   const leaders = useSelector(leaderSelector);
+
   if (isLoading) {
-    return <CircularProgress />;
+    return <Spinner />;
   }
 
   return (
@@ -23,7 +23,7 @@ const LeaderBoard = ({ isLoading }) => {
           <List key={user.id}>
             <ListItem>
               <ListItemAvatar>
-                <Avatar src="https://www.w3schools.com/w3images/avatar2.png" />
+                <Avatar src={user.avatarURL || ""} />
               </ListItemAvatar>
               <ListItemText
                 primary={`${user.name}`}
