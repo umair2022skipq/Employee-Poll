@@ -16,13 +16,14 @@ import {
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { Spinner } from "./NewQuestions";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   employeePollSelector,
   addAnswerAsync,
 } from "../features/employeePoll/employeePollSlice";
 import { userSelector } from "../features/userSlice/userSlice";
+import { authSelector } from "../features/authSlice/authSlice";
 
 function checkIfUserHasVotedAlready(question, userID) {
   if (question.optionOne.votes.includes(userID)) return "optionOne";
@@ -30,18 +31,27 @@ function checkIfUserHasVotedAlready(question, userID) {
   return null;
 }
 
+const questionStats = (question) => {
+  const totalVotesOne = question.optionOne.votes.length;
+  const totalVotesTwo = question.optionTwo.votes.length;
+  const total = totalVotesOne + totalVotesTwo;
+  const percentageVoteOne = Math.round(100 / total) * totalVotesOne;
+  const percentageVoteTwo = Math.round(100 / total) * totalVotesTwo;
+
+  return { totalVotesOne, totalVotesTwo, percentageVoteOne, percentageVoteTwo };
+};
+
 const QuestionDetails = ({ isLoading }) => {
   const [value, setValue] = useState("");
 
   const user = useSelector(userSelector);
   const poll = useSelector(employeePollSelector);
+  const auth = useSelector(authSelector);
 
   const dispatch = useDispatch();
 
   const questionId = useParams();
   const question = { ...poll.questions.byId[questionId.question_id] };
-
-  const navigate = useNavigate();
 
   const author = user.users.byId[question.author];
 
@@ -49,7 +59,9 @@ const QuestionDetails = ({ isLoading }) => {
     return <Typography>Question does not exist.</Typography>;
   }
 
-  const existingValue = checkIfUserHasVotedAlready(question, "mtsamis");
+  const stats = questionStats(question);
+
+  const existingValue = checkIfUserHasVotedAlready(question, auth.userId);
   const currentValue = existingValue || value;
 
   const handleChange = (event) => {
@@ -57,7 +69,6 @@ const QuestionDetails = ({ isLoading }) => {
 
     setValue(event.target.value);
   };
-  console.log(user, existingValue);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -79,12 +90,6 @@ const QuestionDetails = ({ isLoading }) => {
   if (isLoading) {
     return <Spinner />;
   }
-
-  // const navigation = window.performance.getEntriesByType("navigation");
-
-  // if (navigation[0].type === "reload") {
-  //   navigate("/");
-  // }
 
   return (
     <>
@@ -143,7 +148,7 @@ const QuestionDetails = ({ isLoading }) => {
                   <FormHelperText>
                     {existingValue
                       ? ""
-                      : "Stats will appear answer picking an option..."}
+                      : "Stats will appear after picking an option..."}
                   </FormHelperText>
                   <Button
                     type="submit"
@@ -160,6 +165,27 @@ const QuestionDetails = ({ isLoading }) => {
           </CardContent>
         </Box>
       </Card>
+      {existingValue && (
+        <Card title="Stats" sx={{ marginTop: 2 }}>
+          <CardContent>
+            <Typography variant="h5" component="div" gutterBottom>
+              Stats
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              <b>
+                {stats.totalVotesOne}({stats.percentageVoteOne}%)
+              </b>
+              users prefer <b>{question.optionOne.text}</b>,
+              <br />
+              while the remaining
+              <b>
+                {stats.totalVotesTwo}({stats.percentageVoteTwo}%)
+              </b>
+              prefer <b>{question.optionTwo.text}</b>.
+            </Typography>
+          </CardContent>
+        </Card>
+      )}
     </>
   );
 };

@@ -4,11 +4,11 @@ import { Divider } from "@mui/material/";
 import { useSelector } from "react-redux";
 import { employeePollSelector } from "../features/employeePoll/employeePollSlice";
 import { userSelector } from "../features/userSlice/userSlice";
-// import { _getQuestions, _getUsers } from "../data/_DATA";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Question from "./Question";
 import { useLocation } from "react-router-dom";
+import { authSelector } from "../features/authSlice/authSlice";
 
 export function Spinner() {
   return (
@@ -20,25 +20,16 @@ export function Spinner() {
   );
 }
 
-const mtsamis = {
-  id: "mtsamis",
-  password: "xyz123",
-  name: "Mike Tsamis",
-  avatarURL: "https://www.w3schools.com/w3images/avatar2.png",
-  answers: {
-    xj352vofupe1dqz9emx13r: "optionOne",
-    vthrdm985a262al8qx3do: "optionTwo",
-    "6ni6ok3ym7mf1p33lnez": "optionOne",
-  },
-  questions: ["6ni6ok3ym7mf1p33lnez", "xj352vofupe1dqz9emx13r"],
-};
-
 const NewQuestions = ({ isLoading }) => {
   const poll = useSelector(employeePollSelector);
   const user = useSelector(userSelector);
+  const auth = useSelector(authSelector);
   const { pathname } = useLocation();
 
-  const answeredQuestionIds = Object.keys(mtsamis.answers);
+  const authUser = auth.userId ? user.users.byId[auth.userId] : null;
+  console.log(poll.questions);
+
+  const answeredQuestionIds = Object.keys(authUser.answers);
   const newQuestionIds = poll.questions.allIds.filter((id) => {
     if (pathname === "/") {
       return !answeredQuestionIds.includes(id);

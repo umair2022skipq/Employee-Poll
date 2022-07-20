@@ -4,13 +4,14 @@ import { users } from "../../data/_DATA";
 const initialState = {
   userId: undefined,
   isAuthenticated: false,
+  error: false,
 };
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    login: (_, action) => {
+    login: (state, action) => {
       if (Object.keys(users).includes(action.payload.username)) {
         const user = users[action.payload.username];
 
@@ -19,6 +20,8 @@ export const authSlice = createSlice({
           isAuthenticated: true,
         };
       }
+
+      return { ...state, error: true };
     },
     logout: () => ({
       userId: undefined,
@@ -28,9 +31,5 @@ export const authSlice = createSlice({
 });
 
 export const { login, logout } = authSlice.actions;
-
-export const authUserSelector = (state) =>
-  state.auth.userId ? state.user.users.byId[state.auth.userId] : null;
 export const authSelector = (state) => state.auth;
-
 export default authSlice.reducer;
