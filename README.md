@@ -14,7 +14,7 @@ Clone this repository. You will need `node` installed globally on your machine.
 
 Installation:
 
-`npm install` or `npm install`
+`npm install` or `yarn install`
 
 To Run Test Suite:
 
