@@ -49,7 +49,7 @@ const Layout = ({ isLoading }) => {
     setOpen(!open);
   };
 
-  const logout = () => {
+  const logoutHandler = () => {
     dispatch(logout());
     navigate("/");
   };
@@ -147,7 +147,7 @@ const Layout = ({ isLoading }) => {
           </List>
           <Divider sx={{ my: 1 }} />
           <List>
-            <ListItem button onClick={logout}>
+            <ListItem button onClick={logoutHandler}>
               <ListItemIcon>
                 <LogoutIcon />
               </ListItemIcon>
