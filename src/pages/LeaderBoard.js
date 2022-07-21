@@ -19,8 +19,8 @@ const LeaderBoard = ({ isLoading }) => {
   const leaders = (function () {
     return user.users.allIds
       .reduce(
-        (usersWithScores, userId) => [
-          ...usersWithScores,
+        (usersScore, userId) => [
+          ...usersScore,
           {
             ...user.users.byId[userId],
             score: calcUserScore(user.users.byId[userId]),
@@ -28,7 +28,7 @@ const LeaderBoard = ({ isLoading }) => {
         ],
         []
       )
-      .sort((userA, userB) => userB.score - userA.score);
+      .sort((a, b) => a.score - b.score);
   })();
 
   if (isLoading) {
