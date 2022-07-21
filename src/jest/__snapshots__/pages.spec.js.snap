@@ -1,6 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Testing snapshots pages should render 1`] = `
+exports[`Testing snapshots pages should render layout 1`] = `
+<div>
+  <h1
+    class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-1y1zblx-MuiTypography-root"
+  >
+     
+    User does not exist
+     
+  </h1>
+</div>
+`;
+
+exports[`Testing snapshots pages should render leaderboard 1`] = `
+<div>
+  <div
+    class="MuiTypography-root MuiTypography-h2 MuiTypography-gutterBottom css-i1hrn3-MuiTypography-root"
+  >
+    Leaderboard
+  </div>
+</div>
+`;
+
+exports[`Testing snapshots pages should render login 1`] = `
 <div>
   <main
     class="MuiContainer-root MuiContainer-maxWidthXs css-nzinn5-MuiContainer-root"
@@ -154,45 +176,5 @@ exports[`Testing snapshots pages should render 1`] = `
       .
     </p>
   </main>
-</div>
-`;
-
-exports[`Testing snapshots pages should render 2`] = `
-<div>
-  <div
-    class="MuiTypography-root MuiTypography-h2 MuiTypography-gutterBottom css-i1hrn3-MuiTypography-root"
-  >
-    Leaderboard
-  </div>
-</div>
-`;
-
-exports[`Testing snapshots pages should render 3`] = `
-<div>
-  <p
-    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
-  >
-     User does not exist 
-  </p>
-</div>
-`;
-
-exports[`Testing snapshots pages should render layout 1`] = `
-<div>
-  <p
-    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
-  >
-     User does not exist 
-  </p>
-</div>
-`;
-
-exports[`Testing snapshots pages should render leaderboard 1`] = `
-<div>
-  <div
-    class="MuiTypography-root MuiTypography-h2 MuiTypography-gutterBottom css-i1hrn3-MuiTypography-root"
-  >
-    Leaderboard
-  </div>
 </div>
 `;

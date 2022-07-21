@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import store from "../app/store";
 import LeaderBoard from "../pages/LeaderBoard";
 import { _getUsers, _getQuestions } from "../data/_DATA";
+import { BrowserRouter as Router } from "react-router-dom";
 
 describe("Testing snapshots pages", () => {
   it("should render login", function () {
@@ -29,9 +30,11 @@ describe("Testing snapshots pages", () => {
 
   it("should render layout", function () {
     const { container } = render(
-      <Provider store={store}>
-        <Layout />
-      </Provider>
+      <Router>
+        <Provider store={store}>
+          <Layout />
+        </Provider>
+      </Router>
     );
 
     expect(container).toMatchSnapshot();

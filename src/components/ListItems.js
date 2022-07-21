@@ -41,12 +41,6 @@ export const MainListItems = () => {
         </ListItemIcon>
         <ListItemText primary="Add Questions" />
       </ListItemButton>
-      {/* <ListItemButton onClick={() => navigate("/new-questions")}>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="New Questions" />
-      </ListItemButton> */}
       <ListItemButton
         selected={pathname === "/leaderboard"}
         onClick={() => navigate("/leaderboard")}
