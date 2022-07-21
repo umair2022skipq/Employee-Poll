@@ -24,7 +24,6 @@ import {
 } from "../features/employeePoll/employeePollSlice";
 import { userSelector } from "../features/user/userSlice";
 import { authSelector } from "../features/auth/authSlice";
-import { debounce } from "lodash";
 
 function checkIfUserHasVotedAlready(question, userID) {
   if (!question) return;
@@ -58,6 +57,8 @@ const QuestionDetails = ({ isLoading }) => {
   const poll = useSelector(employeePollSelector);
   const auth = useSelector(authSelector);
 
+  const authUser = auth.userId ? user.users.byId[auth.userId] : null;
+
   const dispatch = useDispatch();
 
   const questionId = useParams();
@@ -74,11 +75,11 @@ const QuestionDetails = ({ isLoading }) => {
   const existingValue = checkIfUserHasVotedAlready(question, auth.userId);
   const currentValue = existingValue || value;
 
-  const handleChange = debounce((event) => {
+  const handleChange = (event) => {
     if (existingValue) return;
 
     setValue(event.target.value);
-  });
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -90,7 +91,7 @@ const QuestionDetails = ({ isLoading }) => {
 
     dispatch(
       addAnswerAsync({
-        userId: "mtsamis",
+        userId: authUser.id,
         questionId: question.id,
         answer: node.value,
       })
