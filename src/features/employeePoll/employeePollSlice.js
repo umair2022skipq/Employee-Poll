@@ -36,29 +36,7 @@ const initialState = {
 export const employeePollSlice = createSlice({
   name: "employeePoll",
   initialState,
-  reducers: {
-    add: (state, action) => ({
-      ...state,
-      questions: {
-        ...state.questions,
-        byId: {
-          ...state.questions.byId,
-          [action.payload.id]: action.payload,
-        },
-        allIds: [...state.questions.allIds, action.payload.id],
-      },
-    }),
-    update: (state, action) => ({
-      ...state,
-      questions: {
-        ...state.questions,
-        byId: {
-          ...state.questions.byId,
-          [action.payload.id]: action.payload,
-        },
-      },
-    }),
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getQuestionsAsync.pending, (state) => {

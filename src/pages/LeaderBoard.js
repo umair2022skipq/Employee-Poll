@@ -3,17 +3,33 @@ import { ListItem, ListItemAvatar, ListItemText } from "@mui/material";
 import { Avatar } from "@mui/material/";
 import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
-import { leaderSelector } from "../features/user/userSlice";
 import { Spinner } from "./NewQuestions";
 import { authSelector } from "../features/auth/authSlice";
 import { userSelector } from "../features/user/userSlice";
 
+const calcUserScore = (user) =>
+  user.questions.length + Object.keys(user.answers).length;
+
 const LeaderBoard = ({ isLoading }) => {
-  const leaders = useSelector(leaderSelector);
   const auth = useSelector(authSelector);
   const user = useSelector(userSelector);
 
   const authUser = auth.userId ? user.users.byId[auth.userId] : null;
+
+  const leaders = (function () {
+    return user.users.allIds
+      .reduce(
+        (usersWithScores, userId) => [
+          ...usersWithScores,
+          {
+            ...user.users.byId[userId],
+            score: calcUserScore(user.users.byId[userId]),
+          },
+        ],
+        []
+      )
+      .sort((userA, userB) => userB.score - userA.score);
+  })();
 
   if (isLoading) {
     return <Spinner />;

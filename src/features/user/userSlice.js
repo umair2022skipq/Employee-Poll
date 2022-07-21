@@ -70,26 +70,6 @@ export const userSlice = createSlice({
   },
 });
 
-const calcUserScore = (user) =>
-  user.questions.length + Object.keys(user.answers).length;
-
 export const userSelector = (state) => state.user;
-
-export const leaderSelector = (state) => {
-  const { users } = userSelector(state);
-
-  return users.allIds
-    .reduce(
-      (usersWithScores, userId) => [
-        ...usersWithScores,
-        {
-          ...users.byId[userId],
-          score: calcUserScore(users.byId[userId]),
-        },
-      ],
-      []
-    )
-    .sort((userA, userB) => userB.score - userA.score);
-};
 
 export default userSlice.reducer;

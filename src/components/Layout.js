@@ -18,7 +18,7 @@ import Avatar from "@mui/material/Avatar";
 import { AppBar, Drawer } from "../style/styles";
 
 import { useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { MainListItems } from "./ListItems";
@@ -30,6 +30,7 @@ import Copyright from "./Copyright";
 
 import { authSelector, logout } from "../features/auth/authSlice";
 import { userSelector } from "../features/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Layout = ({ isLoading }) => {
   const mdTheme = createTheme();
@@ -38,6 +39,7 @@ const Layout = ({ isLoading }) => {
   const user = useSelector(userSelector);
 
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const authUser = auth.userId ? user.users.byId[auth.userId] : null;
@@ -45,6 +47,11 @@ const Layout = ({ isLoading }) => {
   const [open, setOpen] = useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
+  };
+
+  const logout = () => {
+    dispatch(logout());
+    navigate("/");
   };
 
   if (!authUser) {
@@ -140,10 +147,7 @@ const Layout = ({ isLoading }) => {
           </List>
           <Divider sx={{ my: 1 }} />
           <List>
-            <ListItem
-              button
-              onClick={() => dispatch(logout()).then(navigate("/"))}
-            >
+            <ListItem button onClick={logout}>
               <ListItemIcon>
                 <LogoutIcon />
               </ListItemIcon>
