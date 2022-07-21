@@ -14,7 +14,6 @@ const LeaderBoard = ({ isLoading }) => {
   const user = useSelector(userSelector);
 
   const authUser = auth.userId ? user.users.byId[auth.userId] : null;
-  console.log(authUser);
 
   if (isLoading) {
     return <Spinner />;

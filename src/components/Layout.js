@@ -18,7 +18,7 @@ import Avatar from "@mui/material/Avatar";
 import { AppBar, Drawer } from "../style/styles";
 
 import { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { MainListItems } from "./ListItems";
@@ -38,6 +38,7 @@ const Layout = ({ isLoading }) => {
   const user = useSelector(userSelector);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const authUser = auth.userId ? user.users.byId[auth.userId] : null;
 
@@ -139,7 +140,10 @@ const Layout = ({ isLoading }) => {
           </List>
           <Divider sx={{ my: 1 }} />
           <List>
-            <ListItem button onClick={() => dispatch(logout())}>
+            <ListItem
+              button
+              onClick={() => dispatch(logout()).then(navigate("/"))}
+            >
               <ListItemIcon>
                 <LogoutIcon />
               </ListItemIcon>
