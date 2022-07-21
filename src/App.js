@@ -3,12 +3,12 @@ import Layout from "./components/Layout";
 import { BrowserRouter as Router } from "react-router-dom";
 import store from "./app/store";
 import { Provider, useSelector, useDispatch } from "react-redux";
-import { getUsersAsync, userSelector } from "./features/userSlice/userSlice";
+import { getUsersAsync, userSelector } from "./features/user/userSlice";
 import {
   getQuestionsAsync,
   employeePollSelector,
 } from "./features/employeePoll/employeePollSlice";
-import { authSelector } from "./features/authSlice/authSlice";
+import { authSelector } from "./features/auth/authSlice";
 import Login from "./pages/Login";
 
 const App = () => {

@@ -3,11 +3,18 @@ import { ListItem, ListItemAvatar, ListItemText } from "@mui/material";
 import { Avatar } from "@mui/material/";
 import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux/es/exports";
-import { leaderSelector } from "../features/userSlice/userSlice";
+import { leaderSelector } from "../features/user/userSlice";
 import { Spinner } from "./NewQuestions";
+import { authSelector } from "../features/auth/authSlice";
+import { userSelector } from "../features/user/userSlice";
 
 const LeaderBoard = ({ isLoading }) => {
   const leaders = useSelector(leaderSelector);
+  const auth = useSelector(authSelector);
+  const user = useSelector(userSelector);
+
+  const authUser = auth.userId ? user.users.byId[auth.userId] : null;
+  console.log(authUser);
 
   if (isLoading) {
     return <Spinner />;
@@ -21,7 +28,11 @@ const LeaderBoard = ({ isLoading }) => {
       {leaders &&
         leaders.map((user) => (
           <List key={user.id}>
-            <ListItem>
+            <ListItem
+              style={{
+                backgroundColor: user.id === authUser.id ? "#bcffc7" : "",
+              }}
+            >
               <ListItemAvatar>
                 <Avatar src={user.avatarURL || ""} />
               </ListItemAvatar>
@@ -33,8 +44,8 @@ const LeaderBoard = ({ isLoading }) => {
                       user.questions.length + Object.keys(user.answers).length
                     }`}{" "}
                     <br />
-                    {`Asked: ${user.questions.length}`} <br />
-                    {`Answered: ${Object.keys(user.answers).length}`}
+                    {`Questions Asked: ${user.questions.length}`} <br />
+                    {`Questions Answered: ${Object.keys(user.answers).length}`}
                   </>
                 }
               />

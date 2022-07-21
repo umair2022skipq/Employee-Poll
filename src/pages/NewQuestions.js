@@ -3,12 +3,12 @@ import { List, ListItem, ListItemText } from "@mui/material";
 import { Divider } from "@mui/material/";
 import { useSelector } from "react-redux";
 import { employeePollSelector } from "../features/employeePoll/employeePollSlice";
-import { userSelector } from "../features/userSlice/userSlice";
+import { userSelector } from "../features/user/userSlice";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Question from "./Question";
 import { useLocation } from "react-router-dom";
-import { authSelector } from "../features/authSlice/authSlice";
+import { authSelector } from "../features/auth/authSlice";
 
 export function Spinner() {
   return (

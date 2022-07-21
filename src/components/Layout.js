@@ -13,6 +13,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import Avatar from "@mui/material/Avatar";
 
 import { AppBar, Drawer } from "../style/styles";
 
@@ -27,8 +28,8 @@ import AddQuestion from "../pages/AddQuestion";
 import QuestionDetails from "../pages/QuestionDetails";
 import Copyright from "./Copyright";
 
-import { authSelector, logout } from "../features/authSlice/authSlice";
-import { userSelector } from "../features/userSlice/userSlice";
+import { authSelector, logout } from "../features/auth/authSlice";
+import { userSelector } from "../features/user/userSlice";
 
 const Layout = ({ isLoading }) => {
   const mdTheme = createTheme();
@@ -76,7 +77,32 @@ const Layout = ({ isLoading }) => {
             >
               Employes Poll
             </Typography>
-            <IconButton color="inherit"></IconButton>
+            <Box sx={{ flexGrow: 0, display: "flex" }}>
+              <div>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  color="inherit"
+                >
+                  <Avatar
+                    alt={authUser.name || undefined}
+                    src={authUser.avatarURL || undefined}
+                  />
+
+                  <Typography
+                    component="h1"
+                    variant="h6"
+                    color="inherit"
+                    noWrap
+                    sx={{ flexGrow: 1, ml: 1 }}
+                  >
+                    {authUser.name}
+                  </Typography>
+                </IconButton>
+              </div>
+            </Box>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>

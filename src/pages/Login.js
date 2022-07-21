@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Copyright from "../components/Copyright";
-import { login, authSelector } from "../features/authSlice/authSlice";
+import { login, authSelector } from "../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 

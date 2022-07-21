@@ -22,8 +22,9 @@ import {
   employeePollSelector,
   addAnswerAsync,
 } from "../features/employeePoll/employeePollSlice";
-import { userSelector } from "../features/userSlice/userSlice";
-import { authSelector } from "../features/authSlice/authSlice";
+import { userSelector } from "../features/user/userSlice";
+import { authSelector } from "../features/auth/authSlice";
+import { debounce } from "loadsh";
 
 function checkIfUserHasVotedAlready(question, userID) {
   if (question.optionOne.votes.includes(userID)) return "optionOne";
@@ -64,11 +65,11 @@ const QuestionDetails = ({ isLoading }) => {
   const existingValue = checkIfUserHasVotedAlready(question, auth.userId);
   const currentValue = existingValue || value;
 
-  const handleChange = (event) => {
+  const handleChange = debounce((event) => {
     if (existingValue) return;
 
     setValue(event.target.value);
-  };
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();

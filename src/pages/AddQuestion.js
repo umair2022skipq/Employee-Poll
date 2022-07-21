@@ -3,7 +3,7 @@ import {
   employeePollSelector,
   addQuestionAsync,
 } from "../features/employeePoll/employeePollSlice";
-import { authSelector } from "../features/authSlice/authSlice";
+import { authSelector } from "../features/auth/authSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +11,8 @@ import Box from "@mui/material/Box";
 import { Alert, LoadingButton } from "@mui/lab";
 import { TextField } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { userSelector } from "../features/userSlice/userSlice";
+import { userSelector } from "../features/user/userSlice";
+import { debounce } from "lodash";
 
 const styles = {
   boxSx: {
@@ -36,12 +37,6 @@ const AddQuestion = () => {
 
   const authUser = auth.userId ? user.users.byId[auth.userId] : null;
 
-  // if (poll.status === "idle") {
-  //   setTimeout(() => {
-  //     navigate("/");
-  //   }, 1000);
-  // }
-
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -57,7 +52,7 @@ const AddQuestion = () => {
         optionOneText: optionOne,
         optionTwoText: optionTwo,
       })
-    );
+    ).then(navigate("/"));
   };
 
   return (
@@ -84,7 +79,7 @@ const AddQuestion = () => {
             fullWidth
             label="Option One"
             name="optionOneText"
-            onChange={(e) => setOptionOne(e.target.value)}
+            onChange={debounce((e) => setOptionOne(e.target.value))}
           />
         </Box>
 
@@ -93,7 +88,7 @@ const AddQuestion = () => {
             fullWidth
             label="Option Two"
             name="optionTwoText"
-            onChange={(e) => setOptionTwo(e.target.value)}
+            onChange={debounce((e) => setOptionTwo(e.target.value))}
           />
         </Box>
 
@@ -101,10 +96,6 @@ const AddQuestion = () => {
           {poll.status === "failed" && (
             <Alert severity="error">The question was not created.</Alert>
           )}
-
-          {/* {poll.status === "idle" && (
-            <Alert severity="success">The question is created created.</Alert>
-          )} */}
 
           {missingFields && (
             <Alert severity="warning">All fields are required.</Alert>
