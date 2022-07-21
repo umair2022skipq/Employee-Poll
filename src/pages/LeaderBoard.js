@@ -2,7 +2,7 @@ import { List } from "@mui/material";
 import { ListItem, ListItemAvatar, ListItemText } from "@mui/material";
 import { Avatar } from "@mui/material/";
 import Typography from "@mui/material/Typography";
-import { useSelector } from "react-redux/es/exports";
+import { useSelector } from "react-redux";
 import { leaderSelector } from "../features/user/userSlice";
 import { Spinner } from "./NewQuestions";
 import { authSelector } from "../features/auth/authSlice";

@@ -47,7 +47,18 @@ const Layout = ({ isLoading }) => {
   };
 
   if (!authUser) {
-    return <Typography> User does not exist </Typography>;
+    return (
+      <Typography
+        component="h1"
+        variant="h6"
+        color="inherit"
+        noWrap
+        sx={{ flexGrow: 1, ml: 1 }}
+      >
+        {" "}
+        User does not exist{" "}
+      </Typography>
+    );
   }
 
   return (

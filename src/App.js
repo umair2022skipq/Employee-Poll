@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import Layout from "./components/Layout";
 import { BrowserRouter as Router } from "react-router-dom";
-import store from "./app/store";
-import { Provider, useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getUsersAsync, userSelector } from "./features/user/userSlice";
 import {
   getQuestionsAsync,
@@ -34,9 +33,7 @@ const App = () => {
   return (
     <>
       <Router>
-        <Provider store={store}>
-          <Layout isLoading={loading} />
-        </Provider>
+        <Layout isLoading={loading} />
       </Router>
     </>
   );
