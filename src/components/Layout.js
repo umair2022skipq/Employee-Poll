@@ -46,6 +46,10 @@ const Layout = ({ isLoading }) => {
     setOpen(!open);
   };
 
+  if (!authUser) {
+    return <Typography> User does not exist </Typography>;
+  }
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>

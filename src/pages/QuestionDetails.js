@@ -24,22 +24,31 @@ import {
 } from "../features/employeePoll/employeePollSlice";
 import { userSelector } from "../features/user/userSlice";
 import { authSelector } from "../features/auth/authSlice";
-import { debounce } from "loadsh";
+import { debounce } from "lodash";
 
 function checkIfUserHasVotedAlready(question, userID) {
+  if (!question) return;
+
   if (question.optionOne.votes.includes(userID)) return "optionOne";
   if (question.optionTwo.votes.includes(userID)) return "optionTwo";
   return null;
 }
 
 const questionStats = (question) => {
+  if (!question) return;
+
   const totalVotesOne = question.optionOne.votes.length;
   const totalVotesTwo = question.optionTwo.votes.length;
   const total = totalVotesOne + totalVotesTwo;
   const percentageVoteOne = Math.round(100 / total) * totalVotesOne;
   const percentageVoteTwo = Math.round(100 / total) * totalVotesTwo;
 
-  return { totalVotesOne, totalVotesTwo, percentageVoteOne, percentageVoteTwo };
+  return {
+    totalVotesOne,
+    totalVotesTwo,
+    percentageVoteOne,
+    percentageVoteTwo,
+  };
 };
 
 const QuestionDetails = ({ isLoading }) => {
@@ -56,8 +65,8 @@ const QuestionDetails = ({ isLoading }) => {
 
   const author = user.users.byId[question.author];
 
-  if (!question) {
-    return <Typography>Question does not exist.</Typography>;
+  if (Object.keys(question).length === 0) {
+    return <Typography>404 Not Found.</Typography>;
   }
 
   const stats = questionStats(question);
@@ -172,7 +181,11 @@ const QuestionDetails = ({ isLoading }) => {
             <Typography variant="h5" component="div" gutterBottom>
               Stats
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              style={{ color: "#15C213" }}
+            >
               <b>
                 {stats.totalVotesOne}({stats.percentageVoteOne}%)
               </b>
